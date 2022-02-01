@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Assignment_1 {
 
-    // Method to read our transaction files
+    // Method to read our transaction file
     public static ArrayList<String> readData() throws Exception {
         ArrayList<String> transactions = new ArrayList<String>();
         BufferedReader reader = new BufferedReader(new FileReader("/Users/untitled/Desktop/Homework_1/Transactions.txt"));
@@ -15,14 +15,37 @@ public class Assignment_1 {
         reader.close();
         return transactions;
     }
-    
-    //Driver Code
-    public static void main(String[] args) throws Exception {
-        ArrayList<String> transactions = new ArrayList<String>();
-        transactions = readData();
 
-        for (int i = 0; i < transactions.size(); i++) {
-            System.out.println(transactions.get(i));
+    // Method for creating separate Array for the "O's"
+    public static ArrayList<String> processOrders (ArrayList<String>  arr) {
+        ArrayList<String> orderTransactions = new ArrayList<String>();
+        for (int i = 0; i < arr.size(); i++) {
+            if (arr.get(i).charAt(0) == 'O') {
+                orderTransactions.add(arr.get(i)); 
+            }
         }
+        return orderTransactions;
+    } 
+
+    // Method for creating separate Array for the "P's"
+    public static ArrayList<String> processPayments (ArrayList<String>  arr) {
+        ArrayList<String> paymentTransactions = new ArrayList<String>();
+        for (int i = 0; i < arr.size(); i++) {
+            if (arr.get(i).charAt(0) == 'P') {
+                paymentTransactions.add(arr.get(i)); 
+            }
+        }
+        return paymentTransactions;
+    } 
+    
+    // Driver Code
+    public static void main(String[] args) throws Exception {
+        ArrayList<String> allTransactions = new ArrayList<String>();
+        ArrayList<String> orderTransactions = new ArrayList<String>();
+        ArrayList<String> paymentTransactions = new ArrayList<String>();
+        
+        allTransactions = readData();
+        orderTransactions = processOrders(allTransactions);
+        paymentTransactions = processPayments(allTransactions);
     }
 }
