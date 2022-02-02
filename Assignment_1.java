@@ -37,6 +37,12 @@ public class Assignment_1 {
         }
         return paymentTransactions;
     } 
+
+    // Method for processing accounts receivable
+    public static ArrayList<String> accountsReceivable(ArrayList<String> orders, ArrayList<String> payments) {
+        ArrayList<String> masterRecord = new ArrayList<String>();
+        return null;
+    }
     
     // Driver Code
     public static void main(String[] args) throws Exception {
@@ -47,5 +53,11 @@ public class Assignment_1 {
         allTransactions = readData();
         orderTransactions = processOrders(allTransactions);
         paymentTransactions = processPayments(allTransactions);
+
+        String text = orderTransactions.get(0);
+        String[] newText = text.split("     "); // Make note of this we have to split it about 5 SPACES 
+
+        // Example formula for our calculation of transactions below
+        System.out.print(Float.parseFloat(newText[4]) * Float.parseFloat(newText[5]));
     }
 }
