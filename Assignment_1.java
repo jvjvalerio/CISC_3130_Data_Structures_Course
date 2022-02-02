@@ -1,13 +1,14 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Assignment_1 {
 
     // Method to read our transaction file
     public static ArrayList<String> readData() throws Exception {
         ArrayList<String> transactions = new ArrayList<String>();
-        BufferedReader reader = new BufferedReader(new FileReader("/Users/untitled/Desktop/Homework_1/Transactions.txt"));
+        BufferedReader reader = new BufferedReader(new FileReader("Transactions.txt"));
         String line = null;
         while ((line = reader.readLine()) != null) {
             transactions.add(line);
@@ -41,6 +42,24 @@ public class Assignment_1 {
     // Method for processing accounts receivable
     public static ArrayList<String> accountsReceivable(ArrayList<String> orders, ArrayList<String> payments) {
         ArrayList<String> masterRecord = new ArrayList<String>();
+        // Customer ID 2000 = julio
+        float juliosBalance = 0;
+        // Customer ID 2001 = brenda
+        float brendasBalance = 0;
+
+        for (int i = 0; i < orders.size(); i++) {
+            String text = orders.get(i);
+            String[] line = text.split("     ");
+            if (line[1].equals("2000")) {
+                juliosBalance +=  (Float.parseFloat(line[4]) * Float.parseFloat(line[5])) - (Float.parseFloat(line[6])/ 100);
+                System.out.println(juliosBalance);
+            System.out.println(Arrays.toString(line));
+            }
+            if (line[1].equals("2001")) {
+                brendasBalance += (Float.parseFloat(line[4]) * Float.parseFloat(line[5])) - (Float.parseFloat(line[6])/ 100);
+            }
+            
+        }
         return null;
     }
     
@@ -53,11 +72,6 @@ public class Assignment_1 {
         allTransactions = readData();
         orderTransactions = processOrders(allTransactions);
         paymentTransactions = processPayments(allTransactions);
-
-        String text = orderTransactions.get(0);
-        String[] newText = text.split("     "); // Make note of this we have to split it about 5 SPACES 
-
-        // Example formula for our calculation of transactions below
-        System.out.print(Float.parseFloat(newText[4]) * Float.parseFloat(newText[5]));
+        accountsReceivable(orderTransactions, paymentTransactions);
     }
 }
