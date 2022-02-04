@@ -49,7 +49,7 @@ public class Assignment_1 {
                 allMasterPlaceHolder = allMaster.get(index).split("\\s+");
                 float discountPayment = Float.parseFloat(placeHolder[3]) * Float.parseFloat(placeHolder[4]) / 100;
                 float reduceBalance = Float.parseFloat(placeHolder[3]) - discountPayment;
-                float balance = Float.parseFloat(allMasterPlaceHolder[3]);
+                float balance = Float.parseFloat(allMasterPlaceHolder[2]);
                 balance -= reduceBalance;
                 allMasterPlaceHolder[2] = Float.toString(balance);
                 String newRecord = String.join(",", allMasterPlaceHolder);
