@@ -37,22 +37,23 @@ public class Assignment_1 {
             if (placeHolder[0].equals("O")) {
                 int index = findCustomerID(placeHolder[1], allMaster);
                 allMasterPlaceHolder = allMaster.get(index).split("\\s+");
-                float discountPrice = Float.parseFloat(placeHolder[5]) * Float.parseFloat(placeHolder[6]) / 100;
-                float cost = discountPrice * Float.parseFloat(placeHolder[4]);
+                float discount = (Integer.parseInt(placeHolder[4]) * Float.parseFloat(placeHolder[5])) * Float.parseFloat(placeHolder[6]) / 100;
+                float cost = (Float.parseFloat(placeHolder[4]) * Float.parseFloat(placeHolder[5]) - discount);
                 float balance = Float.parseFloat(allMasterPlaceHolder[2]);
                 balance += cost;
                 allMasterPlaceHolder[2] = Float.toString(balance);
-                String newRecord = String.join(",", allMasterPlaceHolder);
+                String newRecord = String.join(" ", allMasterPlaceHolder);
                 allMaster.set(index, newRecord);
             } else if (placeHolder[0].equals("P")) {
                 int index = findCustomerID(placeHolder[1], allMaster);
                 allMasterPlaceHolder = allMaster.get(index).split("\\s+");
                 float discountPayment = Float.parseFloat(placeHolder[3]) * Float.parseFloat(placeHolder[4]) / 100;
-                float reduceBalance = Float.parseFloat(placeHolder[3]) - discountPayment;
+                float reduceBalance = Float.parseFloat(placeHolder[3]);
                 float balance = Float.parseFloat(allMasterPlaceHolder[2]);
                 balance -= reduceBalance;
+                balance -= discountPayment;
                 allMasterPlaceHolder[2] = Float.toString(balance);
-                String newRecord = String.join(",", allMasterPlaceHolder);
+                String newRecord = String.join(" ", allMasterPlaceHolder);
                 allMaster.set(index, newRecord);
             }
         }
@@ -61,8 +62,10 @@ public class Assignment_1 {
 
     public static int findCustomerID(String customerID, ArrayList<String> allMasterArrayList) {
         int index = 0;
+        String[] masterPlaceHolder = new String[allMasterArrayList.size()];
         for (int i = 0; i < allMasterArrayList.size(); i++) {
-            if (customerID.equals(allMasterArrayList.get(0))) {
+            masterPlaceHolder = allMasterArrayList.get(i).split(" ");
+            if (customerID.equals(masterPlaceHolder[0])) {
                 index = i;
                 return index;
             }
@@ -79,6 +82,8 @@ public class Assignment_1 {
         allTransactions = readTransactionFile();
         allMaster = readMasterFile();
         updatedMaster = processTransactions(allTransactions, allMaster);
-        System.out.println(updatedMaster.toString());
+        for (int i = 0; i < updatedMaster.size(); i++) {
+            System.out.println(updatedMaster.get(i));
+        }
     }
 }
