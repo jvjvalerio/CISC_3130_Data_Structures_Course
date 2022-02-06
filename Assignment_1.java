@@ -30,36 +30,46 @@ public class Assignment_1 {
 
     // Method for processing Transactions
     public static ArrayList<String> processTransactions(ArrayList<String> allTransactions, ArrayList<String> allMaster) {
+        // Create two arrays to hold our transactions and master file entries
         String[] placeHolder = new String[allTransactions.size()];
-        String[] allMasterPlaceHolder = new String[allMaster.size()];
+        String[] allMasterHolder = new String[allMaster.size()];
+
+        // Loop through all transactions
         for (int i = 0; i < allTransactions.size(); i++) {
             placeHolder = allTransactions.get(i).split("\\s+");
+
+            // If transaction is order, process as order
             if (placeHolder[0].equals("O")) {
                 int index = findCustomerID(placeHolder[1], allMaster);
-                allMasterPlaceHolder = allMaster.get(index).split("\\s+");
+                allMasterHolder = allMaster.get(index).split("\\s+");
                 float discount = (Integer.parseInt(placeHolder[4]) * Float.parseFloat(placeHolder[5])) * Float.parseFloat(placeHolder[6]) / 100;
                 float cost = (Float.parseFloat(placeHolder[4]) * Float.parseFloat(placeHolder[5]) - discount);
-                float balance = Float.parseFloat(allMasterPlaceHolder[2]);
+                float balance = Float.parseFloat(allMasterHolder[2]);
                 balance += cost;
-                allMasterPlaceHolder[2] = Float.toString(balance);
-                String newRecord = String.join(" ", allMasterPlaceHolder);
+                allMasterHolder[2] = Float.toString(balance);
+                String newRecord = String.join(" ", allMasterHolder);
                 allMaster.set(index, newRecord);
+                
+            // If transaction is payment, process as payment
             } else if (placeHolder[0].equals("P")) {
                 int index = findCustomerID(placeHolder[1], allMaster);
-                allMasterPlaceHolder = allMaster.get(index).split("\\s+");
+                allMasterHolder = allMaster.get(index).split("\\s+");
                 float discountPayment = Float.parseFloat(placeHolder[3]) * Float.parseFloat(placeHolder[4]) / 100;
                 float reduceBalance = Float.parseFloat(placeHolder[3]);
-                float balance = Float.parseFloat(allMasterPlaceHolder[2]);
+                float balance = Float.parseFloat(allMasterHolder[2]);
                 balance -= reduceBalance;
                 balance -= discountPayment;
-                allMasterPlaceHolder[2] = Float.toString(balance);
-                String newRecord = String.join(" ", allMasterPlaceHolder);
+                allMasterHolder[2] = Float.toString(balance);
+                String newRecord = String.join(" ", allMasterHolder);
                 allMaster.set(index, newRecord);
             }
         }
+        
+        // Return updated allMaster
         return allMaster;
     }
 
+    // Method for finding Customer Account in the Master File
     public static int findCustomerID(String customerID, ArrayList<String> allMasterArrayList) {
         int index = 0;
         String[] masterPlaceHolder = new String[allMasterArrayList.size()];
