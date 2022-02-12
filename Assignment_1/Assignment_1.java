@@ -1,6 +1,7 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Assignment_1 {
 
@@ -82,6 +83,34 @@ public class Assignment_1 {
         }
         return 0;
     }
+
+    // Method for printing updated balance
+    public static void printUpdatedBalance(ArrayList<String> allTransactions, ArrayList<String> allMaster, ArrayList<String> updatedMaster) {
+        String masterLine = "";
+        String lastLine = "";
+        String[] transactionLines = new String[5];
+        String[] allMasterHolder = new String[allMaster.size()];
+        String[] transactionsHolder = new String[allTransactions.size()];
+        String[] updatedMasterHolder = new String[updatedMaster.size()];
+
+        for (int i = 0; i < allMaster.size(); i++) {
+            allMasterHolder = allMaster.get(i).split("\\s+");
+            masterLine = allMasterHolder[1] + " " + allMasterHolder[0] + " " + "Previous Balance: " + allMasterHolder[2];
+            for (int j = 0; j < allTransactions.size(); j++) {
+                transactionsHolder = allTransactions.get(j).split("\\s+");
+                if (transactionsHolder[1] == allMasterHolder[0]) {
+                    transactionLines[j] = transactionsHolder[2] + " " + transactionsHolder[3] + " " + transactionsHolder[4] + " " + Integer.parseInt(transactionsHolder[5]);
+                }
+            }
+            updatedMasterHolder = updatedMaster.get(i).split("\\s+");
+            if (updatedMasterHolder[0] == allMasterHolder[0]) {
+                lastLine = "Balance Due " + updatedMasterHolder[2];
+            }
+            System.out.println(masterLine);
+            System.out.println(Arrays.toString(transactionLines));
+            System.out.println(lastLine);
+        }
+    }
     
     // Driver Code
     public static void main(String[] args) throws Exception {
@@ -92,10 +121,10 @@ public class Assignment_1 {
         allTransactions = readTransactionFile();
         allMaster = readMasterFile();
         updatedMaster = processTransactions(allTransactions, allMaster);
-
+        printUpdatedBalance(allTransactions, allMaster, updatedMaster);
         // Print the updated Master File
-        for (int i = 0; i < updatedMaster.size(); i++) {
-            System.out.println(updatedMaster.get(i));
-        }
+        // for (int i = 0; i < updatedMaster.size(); i++) {
+        //     System.out.println(updatedMaster.get(i));
+        // }
     }
 }
