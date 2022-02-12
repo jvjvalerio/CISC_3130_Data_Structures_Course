@@ -5,7 +5,7 @@ import java.util.Arrays;
 
 public class Assignment_1 {
 
-    // Method to read our Transaction file
+    // Method for reading our Transaction file
     public static ArrayList<String> readTransactionFile() throws Exception {
         ArrayList<String> transactions = new ArrayList<String>();
         BufferedReader reader = new BufferedReader(new FileReader("Transactions.txt"));
@@ -17,7 +17,7 @@ public class Assignment_1 {
         return transactions;
     }
 
-    // Method to read our Master file
+    // Method for reading our Master file
     public static ArrayList<String> readMasterFile() throws Exception {
         ArrayList<String> master = new ArrayList<String>();
         BufferedReader reader = new BufferedReader(new FileReader("Master_File.txt"));
