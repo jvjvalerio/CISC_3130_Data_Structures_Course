@@ -31,9 +31,11 @@ public class Assignment_1 {
 
     // Method for processing Transactions
     public static ArrayList<String> processTransactions(ArrayList<String> allTransactions, ArrayList<String> allMaster) {
+
         // Create two arrays to hold our transactions and master file entries
         String[] placeHolder = new String[allTransactions.size()];
         String[] allMasterHolder = new String[allMaster.size()];
+        ArrayList<String> updatedAllMaster = new ArrayList<String>();
 
         // Loop through all transactions
         for (int i = 0; i < allTransactions.size(); i++) {
@@ -49,7 +51,7 @@ public class Assignment_1 {
                 balance += cost;
                 allMasterHolder[2] = Float.toString(balance);
                 String newRecord = String.join(" ", allMasterHolder);
-                allMaster.set(index, newRecord);
+                updatedAllMaster.add(index, newRecord);
                 
             // If transaction is payment, process as payment
             } else if (placeHolder[0].equals("P")) {
@@ -62,12 +64,12 @@ public class Assignment_1 {
                 balance -= discountPayment;
                 allMasterHolder[2] = Float.toString(balance);
                 String newRecord = String.join(" ", allMasterHolder);
-                allMaster.set(index, newRecord);
+                updatedAllMaster.add(index, newRecord);
             }
         }
         
         // Return updated allMaster
-        return allMaster;
+        return updatedAllMaster;
     }
 
     // Method for finding Customer Account in the Master File
@@ -122,9 +124,5 @@ public class Assignment_1 {
         allMaster = readMasterFile();
         updatedMaster = processTransactions(allTransactions, allMaster);
         printUpdatedBalance(allTransactions, allMaster, updatedMaster);
-        // Print the updated Master File
-        // for (int i = 0; i < updatedMaster.size(); i++) {
-        //     System.out.println(updatedMaster.get(i));
-        // }
     }
 }
