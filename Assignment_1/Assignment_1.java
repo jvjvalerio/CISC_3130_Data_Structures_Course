@@ -86,22 +86,33 @@ public class Assignment_1 {
         return 0;
     }
 
-    // Method for printing updated balance
+    // Method for printing updated balances
     public static void printUpdatedBalance(ArrayList<String> allTransactions, ArrayList<String> allMaster, ArrayList<String> updatedMaster) {
         String masterLine = "";
         String lastLine = "";
-        String[] transactionLines = new String[5];
+        String[] transactionLines = new String[6];
         String[] allMasterHolder = new String[allMaster.size()];
         String[] transactionsHolder = new String[allTransactions.size()];
         String[] updatedMasterHolder = new String[updatedMaster.size()];
 
-        for (int i = 0; i < allMaster.size(); i++) {
+        for (int i = 0; i < transactionLines.length; i++) {
             allMasterHolder = allMaster.get(i).split("\\s+");
             masterLine = allMasterHolder[1] + " " + allMasterHolder[0] + " " + "Previous Balance: " + allMasterHolder[2];
-            for (int j = 0; j < allTransactions.size(); j++) {
+            for (int j = 0; j < transactionLines.length; j++) {
                 transactionsHolder = allTransactions.get(j).split("\\s+");
-                if (transactionsHolder[1] == allMasterHolder[0]) {
-                    transactionLines[j] = transactionsHolder[2] + " " + transactionsHolder[3] + " " + transactionsHolder[4] + " " + Integer.parseInt(transactionsHolder[5]);
+                if (transactionsHolder[0].equals("O")) {
+                    if (transactionsHolder[1].equals(allMasterHolder[0])) {
+                        float discount = (Integer.parseInt(transactionsHolder[4]) * Float.parseFloat(transactionsHolder[5])) * Float.parseFloat(transactionsHolder[6]) / 100;
+                        float cost = (Float.parseFloat(transactionsHolder[4]) * Float.parseFloat(transactionsHolder[5]) - discount);
+                        transactionLines[j] = transactionsHolder[2] + " " + transactionsHolder[3] + " " + Float.toString(cost);
+                    }
+                }
+                if (transactionsHolder[0].equals("P")) {
+                    if (transactionsHolder[1].equals(allMasterHolder[0])) {
+                        float discountPayment = Float.parseFloat(transactionsHolder[3]) * Float.parseFloat(transactionsHolder[4]) / 100;
+                        float paymentAmount = Float.parseFloat(transactionsHolder[3]) - discountPayment;
+                        transactionLines[j] = transactionsHolder[2] + " " + transactionsHolder[3] + " " + Float.toString(paymentAmount);
+                    }
                 }
             }
             updatedMasterHolder = updatedMaster.get(i).split("\\s+");
@@ -109,8 +120,11 @@ public class Assignment_1 {
                 lastLine = "Balance Due " + updatedMasterHolder[2];
             }
             System.out.println(masterLine);
-            System.out.println(Arrays.toString(transactionLines));
+            for (int k = 0; k < transactionLines.length; k++) {
+                System.out.println(transactionLines[k]);
+            }
             System.out.println(lastLine);
+            Arrays.fill(transactionLines, null);
         }
     }
     
