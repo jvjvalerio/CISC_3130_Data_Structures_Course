@@ -1,7 +1,6 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class Assignment_1 {
 
@@ -90,7 +89,7 @@ public class Assignment_1 {
     public static void printUpdatedBalance(ArrayList<String> allTransactions, ArrayList<String> allMaster, ArrayList<String> updatedMaster) {
         String masterLine = "";
         String lastLine = "";
-        String[] transactionLines = new String[6];
+        String[] transactionLines = new String[10];
         String[] allMasterHolder = new String[allMaster.size()];
         String[] transactionsHolder = new String[allTransactions.size()];
         String[] updatedMasterHolder = new String[updatedMaster.size()];
@@ -116,15 +115,12 @@ public class Assignment_1 {
                 }
             }
             updatedMasterHolder = updatedMaster.get(i).split("\\s+");
-            if (updatedMasterHolder[0] == allMasterHolder[0]) {
-                lastLine = "Balance Due " + updatedMasterHolder[2];
-            }
+            lastLine = "Balance Due " + updatedMasterHolder[2];
             System.out.println(masterLine);
-            for (int k = 0; k < transactionLines.length; k++) {
+            for (int k = 0; k < 4; k++) {
                 System.out.println(transactionLines[k]);
             }
-            System.out.println(lastLine);
-            Arrays.fill(transactionLines, null);
+            System.out.println(lastLine + "\n");
         }
     }
     
