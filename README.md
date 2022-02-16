@@ -9,5 +9,6 @@ We will learn the pros and cons of choosing which structures and/or which sorts 
 
 An interesting item about this course is even though we are teaching it in Java these Data Structures and Sort/Search algorithms actually apply to almost any language you will code in when you get your first (and subsequent) job(s) in this field. 
 
+![maxresdefault](https://user-images.githubusercontent.com/3419415/154363859-43e195d6-02fb-4e85-bb69-38b7d7c079f0.jpg)
 
-![repository-open-graph-template](https://user-images.githubusercontent.com/3419415/154363780-8b43e5ee-8c3a-4b98-bd8e-b25218a04167.png)
+
