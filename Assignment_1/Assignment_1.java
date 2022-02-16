@@ -79,10 +79,23 @@ public class Assignment_1 {
             masterPlaceHolder = allMasterArrayList.get(i).split(" ");
             if (customerID.equals(masterPlaceHolder[0])) {
                 index = i;
-                return index;
             }
         }
-        return 0;
+        return index;
+    }
+
+    // Method for setting index for inner loop
+    public static int findIndexForLoop(String customerID, ArrayList<String> allMasterArrayList) {
+        int index = 0;
+        String[] nextCustomerHolder = new String[6];
+        for (int i = 0; i < allMasterArrayList.size(); i++) {
+            nextCustomerHolder = allMasterArrayList.get(i).split("\\s+");
+            if (customerID.equals(nextCustomerHolder[1])) {
+                index = i;
+                break;
+            }
+        }
+        return index;
     }
 
     // Method for printing updated balances
@@ -94,42 +107,67 @@ public class Assignment_1 {
         String[] transactionsHolder = new String[allTransactions.size()];
         String[] updatedMasterHolder = new String[updatedMaster.size()];
 
+        // Iterate through the Master File to create an invoice for each Customer
         for (int i = 0; i < transactionLines.length; i++) {
+            int lineIndex = 0;
             allMasterHolder = allMaster.get(i).split("\\s+");
             masterLine = allMasterHolder[1] + " " + allMasterHolder[0] + " " + "Previous Balance: " + allMasterHolder[2];
-            for (int j = 0; j < transactionLines.length; j++) {
+
+            // Create an index variable to keep track of our place in the Transaction File to use for our inner loop
+            int index = findIndexForLoop(allMasterHolder[0], allTransactions);
+
+            // Iterate through the Transaction File to find the corresponding transactions for the customer
+            for (int j = index; j < allTransactions.size(); j++) {
                 transactionsHolder = allTransactions.get(j).split("\\s+");
                 if (transactionsHolder[0].equals("O")) {
                     if (transactionsHolder[1].equals(allMasterHolder[0])) {
                         float discount = (Integer.parseInt(transactionsHolder[4]) * Float.parseFloat(transactionsHolder[5])) * Float.parseFloat(transactionsHolder[6]) / 100;
                         float cost = (Float.parseFloat(transactionsHolder[4]) * Float.parseFloat(transactionsHolder[5]) - discount);
-                        transactionLines[j] = transactionsHolder[2] + " " + transactionsHolder[3] + " " + Float.toString(cost);
+                        transactionLines[lineIndex] = transactionsHolder[2] + " " + transactionsHolder[3] + " " + Float.toString(cost);
+                        lineIndex++;
                     }
-                }
+                } 
                 if (transactionsHolder[0].equals("P")) {
                     if (transactionsHolder[1].equals(allMasterHolder[0])) {
                         float discountPayment = Float.parseFloat(transactionsHolder[3]) * Float.parseFloat(transactionsHolder[4]) / 100;
                         float paymentAmount = Float.parseFloat(transactionsHolder[3]) - discountPayment;
-                        transactionLines[j] = transactionsHolder[2] + " " + transactionsHolder[3] + " " + Float.toString(paymentAmount);
+                        transactionLines[lineIndex] = transactionsHolder[2] + " " + transactionsHolder[3] + " " + Float.toString(paymentAmount);
+                        lineIndex++;
                     }
                 }
+                
+                // If the CustomerIDs from both the transactionHolder and allMasterHolder temporary arrays no longer match then break the inner loop
+                if (!transactionsHolder[1].equals(allMasterHolder[0])) {
+                    break;
+                }
             }
+
+            // Split the ith line in the updated Master File and add it to the temporary updatedMasterHolder array
             updatedMasterHolder = updatedMaster.get(i).split("\\s+");
             lastLine = "Balance Due " + updatedMasterHolder[2];
+
+            // Print the masterLine containing the customer information and previous balance 
             System.out.println(masterLine);
+
+            // Print all entries in the transactionLines array list
             for (int k = 0; k < 4; k++) {
                 System.out.println(transactionLines[k]);
             }
+
+            // Print the lastLine with the updated balance with a new line for legibility 
             System.out.println(lastLine + "\n");
         }
     }
     
     // Driver Code
     public static void main(String[] args) throws Exception {
+
+        // Temporary ArrayLists to hold our Transactions, Master entries, and updated Master entries
         ArrayList<String> allTransactions = new ArrayList<String>();
         ArrayList<String> allMaster = new ArrayList<String>();
         ArrayList<String> updatedMaster = new ArrayList<String>();
 
+        // Method calls for reading, processing, and printing the invoices
         allTransactions = readTransactionFile();
         allMaster = readMasterFile();
         updatedMaster = processTransactions(allTransactions, allMaster);
