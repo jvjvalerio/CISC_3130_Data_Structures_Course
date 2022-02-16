@@ -8,3 +8,6 @@ When you finish this course, you will have accumulated knowledge of assorted dat
 We will learn the pros and cons of choosing which structures and/or which sorts to use in different applications. Together we can grow and make ourselves more efficient and knowledgeable   developers of software.
 
 An interesting item about this course is even though we are teaching it in Java these Data Structures and Sort/Search algorithms actually apply to almost any language you will code in when you get your first (and subsequent) job(s) in this field. 
+
+
+![repository-open-graph-template](https://user-images.githubusercontent.com/3419415/154363780-8b43e5ee-8c3a-4b98-bd8e-b25218a04167.png)
