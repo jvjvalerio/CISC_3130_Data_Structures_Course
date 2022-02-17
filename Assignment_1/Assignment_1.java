@@ -29,12 +29,14 @@ public class Assignment_1 {
     }
 
     // Method for processing Transactions
-    public static ArrayList<String> processTransactions(ArrayList<String> allTransactions, ArrayList<String> allMaster) {
+    public static ArrayList<String> processTransactions(ArrayList<String> allTransactions, ArrayList<String> allMaster) throws Exception {
 
         // Create two arrays to hold our transactions and master file entries
         String[] placeHolder = new String[allTransactions.size()];
         String[] allMasterHolder = new String[allMaster.size()];
         ArrayList<String> updatedAllMaster = new ArrayList<String>();
+        // Call readMasterFile method to populate the ArrayList so our set method at the end of each if block does not return an index 0 out of bounds exception
+        updatedAllMaster = readMasterFile();
 
         // Loop through all transactions
         for (int i = 0; i < allTransactions.size(); i++) {
@@ -43,19 +45,19 @@ public class Assignment_1 {
             // If transaction is order, process as order
             if (placeHolder[0].equals("O")) {  
                 int index = findCustomerID(placeHolder[1], allMaster);
-                allMasterHolder = allMaster.get(index).split("\\s+");
+                allMasterHolder = updatedAllMaster.get(index).split("\\s+");
                 float discount = (Integer.parseInt(placeHolder[4]) * Float.parseFloat(placeHolder[5])) * Float.parseFloat(placeHolder[6]) / 100;
                 float cost = (Float.parseFloat(placeHolder[4]) * Float.parseFloat(placeHolder[5]) - discount);
                 float balance = Float.parseFloat(allMasterHolder[2]);
                 balance += cost;
                 allMasterHolder[2] = Float.toString(balance);
                 String newRecord = String.join(" ", allMasterHolder);
-                updatedAllMaster.add(index, newRecord);
+                updatedAllMaster.set(index, newRecord);
                 
             // If transaction is payment, process as payment
             } else if (placeHolder[0].equals("P")) {
                 int index = findCustomerID(placeHolder[1], allMaster);
-                allMasterHolder = allMaster.get(index).split("\\s+");
+                allMasterHolder = updatedAllMaster.get(index).split("\\s+");
                 float discountPayment = Float.parseFloat(placeHolder[3]) * Float.parseFloat(placeHolder[4]) / 100;
                 float reduceBalance = Float.parseFloat(placeHolder[3]);
                 float balance = Float.parseFloat(allMasterHolder[2]);
@@ -63,7 +65,7 @@ public class Assignment_1 {
                 balance -= discountPayment;
                 allMasterHolder[2] = Float.toString(balance);
                 String newRecord = String.join(" ", allMasterHolder);
-                updatedAllMaster.add(index, newRecord);
+                updatedAllMaster.set(index, newRecord);
             }
         }
         
@@ -79,9 +81,10 @@ public class Assignment_1 {
             masterPlaceHolder = allMasterArrayList.get(i).split(" ");
             if (customerID.equals(masterPlaceHolder[0])) {
                 index = i;
+                return index;
             }
         }
-        return index;
+        return 0;
     }
 
     // Method for setting index for inner loop
@@ -130,8 +133,8 @@ public class Assignment_1 {
                 if (transactionsHolder[0].equals("P")) {
                     if (transactionsHolder[1].equals(allMasterHolder[0])) {
                         float discountPayment = Float.parseFloat(transactionsHolder[3]) * Float.parseFloat(transactionsHolder[4]) / 100;
-                        float paymentAmount = Float.parseFloat(transactionsHolder[3]) - discountPayment;
-                        transactionLines[lineIndex] = transactionsHolder[2] + " " + transactionsHolder[3] + " " + Float.toString(paymentAmount);
+                        float paymentAmount = Float.parseFloat(transactionsHolder[3]) + discountPayment;
+                        transactionLines[lineIndex] = transactionsHolder[2] + " Payment: " + Float.toString(paymentAmount);
                         lineIndex++;
                     }
                 }
