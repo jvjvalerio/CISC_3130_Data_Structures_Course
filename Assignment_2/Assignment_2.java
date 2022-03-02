@@ -25,14 +25,16 @@ class Personnel {
     String streetAddress = "";
     String cityStateZip = "";
     String hourlyRate = "";
+    String blankSpace = "";
 
     // Personnel Constructor
-    public Personnel(String employeeNo, String lastNameFirstName, String streetAddress, String cityStateZip, String hourlyRate) {
+    public Personnel(String employeeNo, String lastNameFirstName, String streetAddress, String cityStateZip, String hourlyRate, String blankSpace) {
         this.employeeNo = employeeNo;
         this.lastNameFirstName = lastNameFirstName;
         this.streetAddress = streetAddress;
         this.cityStateZip = cityStateZip;
         this.hourlyRate = hourlyRate;
+        this.blankSpace = blankSpace;
     }
 }
 
@@ -61,19 +63,23 @@ public class Assignment_2 {
         return personnelFile;
     }
 
-
+    // Driver Code
     public static void main(String[] args) throws Exception {
         // Create two ArrayLists to hold our data files
         ArrayList<String> payDataFile = new ArrayList<String>();
         ArrayList<String> persDataFile = new ArrayList<String>();
+        ArrayList<Personnel> arrayOfPersonnel = new ArrayList<Personnel>();
         payDataFile = readPayDataFile();
         persDataFile = readPersDataFile();
-        PayRoll firstPayroll = new PayRoll(payDataFile.get(0), payDataFile.get(1), payDataFile.get(2), payDataFile.get(3));
-        Personnel firstPersonnel = new Personnel(persDataFile.get(0), persDataFile.get(1), persDataFile.get(2), persDataFile.get(3), persDataFile.get(4));
-        System.out.println(firstPersonnel.employeeNo);
-        System.out.println(firstPersonnel.lastNameFirstName);
-        System.out.println(firstPersonnel.streetAddress);
-        System.out.println(firstPersonnel.cityStateZip);
-        System.out.println(firstPersonnel.hourlyRate);
+
+        int j = 0;
+        for (int i = 0; i < 7; i++) {
+            arrayOfPersonnel.add(new Personnel(persDataFile.get(j), persDataFile.get(j+1), persDataFile.get(j+2), persDataFile.get(j+3), persDataFile.get(j+4), persDataFile.get(j+5)));
+            j+=6;
+        }
+
+        // for (Personnel obj : arrayOfPersonnel) {
+        //     System.out.println(obj.employeeNo + " " + obj.lastNameFirstName + " " + obj.streetAddress + " " + obj.cityStateZip + " " + obj.hourlyRate + " " + obj.blankSpace);
+        // }
     }
 }
