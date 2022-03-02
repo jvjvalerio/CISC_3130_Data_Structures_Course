@@ -73,13 +73,13 @@ public class Assignment_2 {
         persDataFile = readPersDataFile();
 
         int j = 0;
-        for (int i = 0; i < 7; i++) {
+        for (int i = 0; i < 6; i++) {
             arrayOfPersonnel.add(new Personnel(persDataFile.get(j), persDataFile.get(j+1), persDataFile.get(j+2), persDataFile.get(j+3), persDataFile.get(j+4), persDataFile.get(j+5)));
             j+=6;
         }
 
-        // for (Personnel obj : arrayOfPersonnel) {
-        //     System.out.println(obj.employeeNo + " " + obj.lastNameFirstName + " " + obj.streetAddress + " " + obj.cityStateZip + " " + obj.hourlyRate + " " + obj.blankSpace);
-        // }
+        for (Personnel obj : arrayOfPersonnel) {
+            System.out.print(obj.employeeNo + " " + obj.lastNameFirstName + " " + obj.streetAddress + " " + obj.cityStateZip + " " + obj.hourlyRate + " " + obj.blankSpace+ "\n");
+        }
     }
 }
