@@ -114,75 +114,21 @@ public class Assignment_2 {
         return arrayOfPersonnel;
     }
 
-    // Method for Calculating Payroll
-    // public static void paymentCalculator(ArrayList<PayRoll> arrayOfPayroll, ArrayList<Personnel> arrayOfPersonnel) {
-    //     ArrayList<Payment> arrayOfPayment = new ArrayList<Payment>();
-    //     String firstDayFirstTime = "";
-    //     String firstDaySecondTime = ""; 
-    //     String secondDayFirstTime = ""; 
-    //     String secondDaySecondTime = ""; 
-    //     String thirdDayfirstTime = ""; 
-    //     String thirdDaySecondTime = "";
-
-    //     int i = 1;
-    //     for (PayRoll obj : arrayOfPayroll) {
-    //         if (obj.employeeNo.equals("000" + Integer.toString(i))) {
-    //             if (obj.numOfDays.equals("1")) {
-    //                 String[] days = new String[2];
-    //                 days = obj.firstDay.split("\\s+");
-    //                 for (int j = 0; j < days.length; j++) {
-    //                     if (days[j].length() == 5) {
-    //                         firstDayFirstTime = days[j].substring(0, 1);
-    //                         if (Integer.parseInt(firstDayFirstTime) == 1) {
-    //                             firstDayFirstTime = "13";
-    //                         } else if (Integer.parseInt(firstDayFirstTime) == 2) {
-    //                             firstDayFirstTime = "14";
-    //                         } else if (Integer.parseInt(firstDayFirstTime) == 3) {
-    //                             firstDayFirstTime = "15";
-    //                         }
-    //                     } else if (days[j].length() == 4) {
-    //                         firstDayFirstTime = '0' + days[j];
-    //                         firstDayFirstTime = firstDayFirstTime.substring(0, 2);
-    //                         if (firstDayFirstTime.equals("01")) {
-    //                             firstDayFirstTime = "13";
-    //                         } else if (firstDayFirstTime.equals("02")) {
-    //                             firstDayFirstTime = "14";
-    //                         } else if (firstDayFirstTime.equals("03")) {
-    //                             firstDayFirstTime = "15";
-    //                         }
-    //                     }
-    //                     if (Integer.parseInt(firstDayFirstTime) < 9) {
-    //                         Double firstPayment = Double.valueOf(9 - Integer.parseInt(firstDayFirstTime));
-    //                     } else if (9 <= Integer.parseInt(firstDayFirstTime) && Integer.parseInt(firstDayFirstTime) <= 12) {
-    //                         Double firstPayment = Double.valueOf(12 - Integer.parseInt(firstDayFirstTime));
-    //                     } else if (12 < Integer.parseInt(firstDayFirstTime)) {
-    //                         Double firstPayment = Double.valueOf(Integer.parseInt(firstDayFirstTime) - 12);
-    //                     }
-    //                     }
-    //                 }
-    //             }
-    //             i++;
-    //         }
-    //     }
-
+        // Method for computing payroll
         public static void computePayroll(ArrayList<PayRoll> arrayOfPayroll, ArrayList<Personnel> arrayOfPersonnel) {
-            // List of Days
-            List<PayRoll> listOfOneDays = new ArrayList<PayRoll>();
-            List<PayRoll> listOfTwoDays = new ArrayList<PayRoll>();
-            List<PayRoll> listOfThreeDays = new ArrayList<PayRoll>();
-            Double[] rates;
+            ArrayList<String> pay = new ArrayList<String>();
+            Double[] rate;
+            double startHour;
+            double endHour;
+            double hr;
+            double fees = 0.0;
 
-            // Use of streams to separate all PayRoll objects in number of days
-            listOfOneDays = arrayOfPayroll.stream()
-                .filter(PayRoll -> PayRoll.numOfDays.equals("1"))
-                .collect(Collectors.toList());
-            listOfTwoDays = arrayOfPayroll.stream()
-                .filter(PayRoll -> PayRoll.numOfDays.equals("2"))
-                .collect(Collectors.toList());
-            listOfThreeDays = arrayOfPayroll.stream()
-                .filter(PayRoll -> PayRoll.numOfDays.equals("3"))
-                .collect(Collectors.toList());   
-
+            for (PayRoll obj : arrayOfPayroll) {
+                if (obj.numOfDays.equals("1")) {
+                    rate = Stream.of(obj.firstDay.split("\\s")).mapToDouble(r -> Double.parseDouble(r)).t;
+                }
+            }
+            
         }  
 
     // Driver Code
