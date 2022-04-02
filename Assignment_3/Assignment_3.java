@@ -7,22 +7,22 @@ class Sales_Record {
     // Variables for constructors
     String recordType;
     String woodType;
-    String widgetsOrDiscounts;
+    int amountOfWood;
     double price;
     int discount;
-    int payment;
+    int widgetsRequested;
 
     // Sales_Record object
-    public Sales_Record(String recordType, String woodType, String widgetsOrDiscounts, double price) {
+    public Sales_Record(String recordType, String woodType, int amountOfWood, double price) {
         this.recordType = recordType;
         this.woodType = woodType;
-        this.widgetsOrDiscounts = widgetsOrDiscounts;
+        this.amountOfWood = amountOfWood;
         this.price = price;
     }
-    public Sales_Record(String recordType, String woodType, int payment) {
+    public Sales_Record(String recordType, String woodType, int widgetsRequested) {
         this.recordType = recordType;
         this.woodType = woodType;
-        this.payment = payment;
+        this.widgetsRequested = widgetsRequested;
     }
 
     public Sales_Record(String recordType, int discount) {
@@ -54,15 +54,44 @@ public class Assignment_3 {
         for (int i = 0; i < salesRecord.size(); i++) {
             records = salesRecord.get(i).split("\\s+");
             if (records[0].equals("R")) {
-                updatedSalesRecords.add(new Sales_Record(records[0], records[1], records[2], Double.parseDouble(records[3])));
+                updatedSalesRecords.add(new Sales_Record(records[0], records[1], Integer.parseInt(records[2]), Double.parseDouble(records[3])));
             } else if (records[0].equals("S")) {
                 updatedSalesRecords.add(new Sales_Record(records[0], records[1], Integer.parseInt(records[2])));
             } else if (records[0].equals("P")) {
                 updatedSalesRecords.add(new Sales_Record(records[0], Integer.parseInt(records[1])));
             }
         }
-
         return updatedSalesRecords;
+    }
+
+    // Method for calculating oStock
+    public static LinkedList<Sales_Record> calculateStock(ArrayList<Sales_Record> updatedSalesRecords, LinkedList<Sales_Record> oStock, LinkedList<Sales_Record> cStock) {
+        String[] widgetsSold = new String[5];
+
+        for (Sales_Record obj: updatedSalesRecords) {
+            if (obj.recordType.equals("R") && obj.woodType.equals("O")) {
+                oStock.add(obj);
+            }
+            if (obj.recordType.equals("R") && obj.woodType.equals("C")) {
+                cStock.add(obj);
+            }
+            if (obj.recordType.equals("S") && obj.woodType.equals("O")) {
+                if (oStock.getLast().amountOfWood < obj.widgetsRequested) {
+                    int widgetsLeftOver = obj.widgetsRequested - oStock.getLast().amountOfWood;
+                    obj.widgetsRequested = widgetsLeftOver;
+                    if (oStock.getLast().amountOfWood == 0) {
+                        oStock.removeLast();
+                    }
+                    double priceWidgetsSoldAt = obj.widgetsRequested * oStock.getLast().price;
+                    Sales_Record wood = oStock.getLast();
+                    
+                        
+                    }
+                }
+            }
+            
+        }
+        return oStock;
     }
 
     // Driver Code
@@ -70,10 +99,16 @@ public class Assignment_3 {
         // ArrayLists for our records and stock of wood
         ArrayList<String> salesRecord = new ArrayList<>();
         ArrayList<Sales_Record> updatedSalesRecords = new ArrayList<>();
-        LinkedList<String> woodStock = new LinkedList<>();
+        LinkedList<Sales_Record> oStock = new  LinkedList<>();
+        LinkedList<Sales_Record> cStock = new  LinkedList<>();
 
         // Method Calls
         salesRecord = readDataFile();
         updatedSalesRecords = populateObjectArray(salesRecord);
+        oStock = calculateStock(updatedSalesRecords, oStock, cStock);
+
+        for (Sales_Record obj: oStock) {
+            System.out.println(obj.recordType + " " + obj.woodType + " " + obj.widgetsOrDiscounts + " " + obj.price);
+        }
     }
 }
