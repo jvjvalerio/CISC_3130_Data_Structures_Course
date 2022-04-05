@@ -1,9 +1,6 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 // PayRoll class
 class PayRoll {
@@ -50,6 +47,7 @@ class Personnel {
 }
 
 // Payment class
+
 class Payment {
     String lastNameFirstName;
     Double payment;
@@ -59,6 +57,8 @@ class Payment {
         this.lastNameFirstName = lastNameFirstName;
         this.payment = payment;
     }
+
+
 }
 
 public class Assignment_2 {
@@ -113,23 +113,117 @@ public class Assignment_2 {
         }
         return arrayOfPersonnel;
     }
+    // Method for Converting time
+    public static ArrayList<PayRoll> convertTime(ArrayList<PayRoll> arrayOfPayroll) {
+        for (PayRoll obj: arrayOfPayroll) {
+            if (obj.numOfDays.equals("1")) {
+                String[] splitTime = obj.firstDay.split("\\s+");
+                if (splitTime[0].length() == 4) {
+                    switch (splitTime[0].charAt(0)) {
+                        case '1':
+                            splitTime[0] = "13" + splitTime[0].substring(1, 4);
+                            break;
+                        case '2':
+                            splitTime[0] = "14" + splitTime[0].substring(1, 4);
+                            break;
+                        case '3':
+                            splitTime[0] = "15" + splitTime[0].substring(1, 4);
+                        default:
+                            break;
+                    }
+                    switch (splitTime[1].charAt(0)) {
+                        case '1':
+                            splitTime[1] = "13" + splitTime[1].substring(1, 4);
+                            break;
+                        case '2':
+                            splitTime[1] = "14" + splitTime[1].substring(1, 4);
+                            break;
+                        case '3':
+                            splitTime[1] = "15" + splitTime[1].substring(1, 4);
+                        default:
+                            break;
+                    }
 
-        // Method for computing payroll
-        public static void computePayroll(ArrayList<PayRoll> arrayOfPayroll, ArrayList<Personnel> arrayOfPersonnel) {
-            ArrayList<String> pay = new ArrayList<String>();
-            Double[] rate;
-            double startHour;
-            double endHour;
-            double hr;
-            double fees = 0.0;
-
-            for (PayRoll obj : arrayOfPayroll) {
-                if (obj.numOfDays.equals("1")) {
-                    rate = Stream.of(obj.firstDay.split("\\s")).mapToDouble(r -> Double.parseDouble(r)).t;
+                    obj.firstDay = splitTime[0] + " " + splitTime[1];
+                }
+            } else if (obj.numOfDays.equals("2")) {
+                String[] splitTime = obj.firstDay.split("\\s+");
+                if (splitTime[0].length() == 4) {
+                    switch (splitTime[0].charAt(0)) {
+                        case '1':
+                            splitTime[0] = "13" + splitTime[0].substring(1, 4);
+                            break;
+                        case '2':
+                            splitTime[0] = "14" + splitTime[0].substring(1, 4);
+                            break;
+                        case '3':
+                            splitTime[0] = "15" + splitTime[0].substring(1, 4);
+                        default:
+                            break;
+                    }
+                    // ****************** Don't forget to Switch conditionals for two digit numbers tomorrow!! **********************
+                    switch (splitTime[1].charAt(0)) {
+                        case '1':
+                            splitTime[1] = "13" + splitTime[1].substring(1, 4);
+                            break;
+                        case '2':
+                            splitTime[1] = "14" + splitTime[1].substring(1, 4);
+                            break;
+                        case '3':
+                            splitTime[1] = "15" + splitTime[1].substring(1, 4);
+                        default:
+                            break;
+                    }
+                    String[] splitTime2 = obj.secondDay.split("\\s+");
+                    if (splitTime2[0].length() == 4) {
+                        switch (splitTime2[0].charAt(0)) {
+                            case '1':
+                                splitTime2[0] = "13" + splitTime2[0].substring(1, 4);
+                                break;
+                            case '2':
+                                splitTime2[0] = "14"+ splitTime2[0].substring(1, 4);
+                                break;
+                            case '3':
+                                splitTime2[0] = "15"+ splitTime2[0].substring(1, 4);
+                            default:
+                                break;
+                        }
+                        switch (splitTime[1].charAt(0)) {
+                            case '1':
+                                splitTime2[1] = "13"+ splitTime2[1].substring(1, 4);
+                                break;
+                            case '2':
+                                splitTime2[1] = "14"+ splitTime2[1].substring(1, 4);
+                                break;
+                            case '3':
+                                splitTime2[1] = "15"+ splitTime2[1].substring(1, 4);
+                            default:
+                                break;
+                        }
+                    }
                 }
             }
-            
-        }  
+        }
+        return arrayOfPayroll;
+    }
+
+    // Method for Calculating Payroll
+    // public static void paymentCalculator(ArrayList<PayRoll> arrayOfPayroll, ArrayList<Personnel> arrayOfPersonnel) throws ParseException {
+    //     ArrayList<Payment> arrayOfPayment = new ArrayList<Payment>();
+    //     for (PayRoll obj : arrayOfPayroll) {
+    //         int i = 1;
+    //         if (obj.employeeNo.equals("000" + Integer.toString(i)) && obj.numOfDays.equals("2")) {
+    //             String[] hours = obj.firstDay.split("\\s+");
+    //             String firstTime = date.toString();
+    //             firstTime = firstTime.join(":");
+    //             if (Integer.parseInt(firstTime) < 900) {
+    //                 int beforeNine;
+    //                 beforeNine = (9 - Integer.parseInt(firstTime));
+    //             }
+    //         }
+    //         i++;
+    //     }
+    // }
 
     // Driver Code
     public static void main(String[] args) throws Exception {
@@ -144,7 +238,7 @@ public class Assignment_2 {
         persDataFile = readPersDataFile();
         arrayOfPayroll = arrayOfPayroll(payDataFile);
         arrayOfPersonnel = arrayOfPersonnel(persDataFile);
+        arrayOfPayroll = convertTime(arrayOfPayroll);
         // paymentCalculator(arrayOfPayroll, arrayOfPersonnel);
-        computePayroll(arrayOfPayroll, arrayOfPersonnel);
     }
 }
