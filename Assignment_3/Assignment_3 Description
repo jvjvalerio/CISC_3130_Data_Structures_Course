@@ -1,0 +1,95 @@
+
+You are to use Linked Lists to do this Program.
+
+
+The True Lumber Company receives shipments of either Oak Wood or Cherry Maple Wood at various costs. The store’s policy is to charge a 40% markup, and to sell the wood that was received earlier before wood which was received later. This is called a FIFO policy.
+
+
+Write a program using linked lists that reads in three possible types of input data and does the following:
+
+
+A receipt record which contains 4 fields first an “R” to show it is a receipt of wood from the manufacturer then an “O” or a “C” for the type of wood it is    and a quantity and a price which represent the receipt of a quantity of the wood at the stated cost per piece.
+
+
+A request from a retailer (which contains 3 fields) who wants to buy some wood which first contains an “S” to show it is a request for a sale followed by an “O” or a ”C” for the type of wood requested and a quantity which represents the number of pieces of wood requested. 
+
+
+A promotion card which first contains a “P” and a number such as 25 which would represent a 25% discount to the next buying customer (the next sales card).  
+
+
+
+The program should
+
+
+1.	Print a message after each receipt record is read in with the price of the wood received.
+
+2.	Print a message after each promotion card is read in with the amount of discount the next customer will be receiving.
+
+3.	After a sales record is read in print a message stating the number sold and the price of each set of pieces of wood in the node and total price of the order. For example, if 200 pieces of wood were sold and there were 50 widgets at $1.00 and 100 at $2.00 and 50 at $3.00 print (recall the 40% markup and the FIFO policy)
+
+	
+200 Widgets sold 
+	50   at 1.30 each 	Sales:  $   65.00
+	100  at 2.60 each	Sales:  $ 260.00   
+	50   at 3.90 each 	Sales:  $ 195.00
+			 Total Sale:    $ 520.00 
+
+If there are an insufficient number amount of wood in stock to fill an order sell as many as are available and then print 
+
+“Remainder of xxx pieces of Oak or (Cherry Maple) wood not available”
+
+Do not forget the promotional discount.
+
+At the end of the data before exiting the program print out under a separate heading the number of pieces of each type of wood remaining in stock and their original purchase price. 
+
+
+This can be done using 2 separate linked lists – (which is the easier way) or a single list which will be more difficult when you are selling widgets since you will need to travel down the list each time to the right type of wood.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Data for program
+
+R/S/P	    O/C  	# widgets or		Price
+		          discount%
+
+R	       O		150			$3.00
+R        C		130			$5.00
+S	       O		145
+R	       O		50			$6.00
+S	       C 	  75
+S	       O		180	
+R	       C		50			$7.00
+R	       C		30			$8.00
+R	       O		40			$9.00
+P			   30%
+S	       C 	  50
+S	       O		30
+R	       C		50			$10.00
+R	       O		265			$11.00
+S	       O		60
+P			   50%
+S	       O		100
+S	       C		70
+S	       O		175
+R	       C		40			$13.00
+R	       O		75			$15.00
+S	       O		50
+R	       C		30			$16.00
+R	       O		40			$18.00
