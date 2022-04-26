@@ -1,0 +1,31 @@
+
+You are to use Binary Trees to do this Program.
+
+Write a complete program, which will process several sets of numbers:
+
+
+For each set of numbers, you should:
+
+1.	Create a binary tree.
+2.	Print the trees using “inorder”, “preorder”, and “postorder”. 
+3.	Call a method Count which counts the number of nodes in each tree and then have the main program print the result. 
+4.	Create a binary tree from a combination of all the numbers from sets 1, 2, and 3 and then do the same thing for sets 4, 5, and 6.      
+5.	Print the 2 trees using “inorder”, “preorder”, and “postorder”. 
+6.	Call a method Count again which counts the number of nodes in the 2 trees with the main program printing the 2 totals. 
+7.	Then call a method (or 2 separate methods) which tells me how many even numbers and how many odd numbers there are in the 2 trees that were created in step 4 above. Once again, the main program should print the answers. 
+
+Data to be used 
+
+Use a value to determine end of data (example -999)
+
+1.	 Set #1: 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 -999
+
+2.	Set #2: 3 1 5 17 14 62 -999
+
+3.	Set #3: 17 12 75 12 37 60 90 11 15 35 45 53 67 97 95 -999
+
+4.	Set #4: 150 40 60 39 34 27 10 82 15 -999
+
+5.	Set #5: 43 6 9 -999 
+
+6.	Set #6:  14 15 13 17 18 12 16 94 46 34 74 -999
