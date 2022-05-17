@@ -7,25 +7,39 @@ public class Family {
 
     MemberNode root;
 
-    public static void main(String[] args) {
+    class MemberNode {
+        String name;
+        LinkedList<MemberNode> childs;
 
-        Family family = new Family();
-        family.constructFamilyTree();
-        // family.printFamilyTree(rootMember);
+        MemberNode(String name) {
+            this.name = name;
+            this.childs = new LinkedList<>();
+        }
 
-        family.retrieveFather("Michael");
-        family.retrieveSons("Bob");
-        family.retrieveBrothers("Richard", null);
-        family.retrieveOldestBrother("Bob");
-        family.retrieveYoungestBrother("Bob");
-        family.retrieveOldestSon("Bob");
-        family.retrieveYoungestSon("Bob");
-        family.retrieveUncles("Jake");
-        family.retrieveGrandfather("Bill");
+        public boolean equals(Object obj) {
 
+            if (obj == this) {
+                return true;
+            }
+
+            if (!(obj instanceof MemberNode)) {
+                return false;
+            }
+
+            MemberNode node = (MemberNode) obj;
+            if (!this.name.equals(node.name)) {
+                return false;
+            }
+            return true;
+        }
+
+        @Override
+        public int hashCode() {
+            return name.hashCode();
+        }
     }
 
-    // construct family tree
+    // Construction of family tree
     private MemberNode constructFamilyTree() {
 
         String data = getInput();
@@ -79,7 +93,7 @@ public class Family {
                 MemberNode node = queue.poll();
                 for (MemberNode item : node.childs) {
                     if (item.name.equals(member)) {
-                        String prefix = "#Father";
+                        String prefix = "Father";
                         System.out.println(prefix + " of " + member + " - ");
                         System.out.println(node.name + " ");
                         break;
@@ -105,7 +119,7 @@ public class Family {
                 MemberNode p = q.peek();
                 q.remove();
                 if (p.name.equals(member)) {
-                    System.out.println("#Sons of " + member + " - ");
+                    System.out.println("Sons of " + member + " - ");
 
                     for (int i = 0; i < p.childs.size(); i++)
                         System.out.println(p.childs.get(i).name);
@@ -134,7 +148,7 @@ public class Family {
                         if (replace != null) {
                             prefix = replace;
                         } else {
-                            prefix = "#Brothers";
+                            prefix = "Brothers";
                         }
                         if (replace == null)
                             System.out.println(prefix + " of " + member + " - ");
@@ -164,7 +178,7 @@ public class Family {
                 MemberNode node = queue.poll();
                 for (MemberNode item : node.childs) {
                     if (item.name.equals(member)) {
-                        System.out.println("#Oldest brother of " + member + " - ");
+                        System.out.println("Oldest brother of " + member + " - ");
                         System.out.println(node.childs.getFirst().name);
                         break;
                     }
@@ -187,7 +201,7 @@ public class Family {
                 MemberNode node = queue.poll();
                 for (MemberNode item : node.childs) {
                     if (item.name.equals(member)) {
-                        System.out.println("#Youngest brother of " + member + " - ");
+                        System.out.println("Youngest brother of " + member + " - ");
                         System.out.println(node.childs.getLast().name);
                         break;
                     }
@@ -212,7 +226,7 @@ public class Family {
                 MemberNode p = q.peek();
                 q.remove();
                 if (p.name.equals(member)) {
-                    System.out.println("#Oldest son of " + member + " : ");
+                    System.out.println("Oldest son of " + member + " : ");
                     System.out.println(p.childs.getFirst().name);
                     break;
                 }
@@ -238,7 +252,7 @@ public class Family {
                 MemberNode p = q.peek();
                 q.remove();
                 if (p.name.equals(member)) {
-                    System.out.println("#Youngest son of " + member + " : ");
+                    System.out.println("Youngest son of " + member + " : ");
                     System.out.println(p.childs.getLast().name);
                     break;
                 }
@@ -262,7 +276,7 @@ public class Family {
                 MemberNode node = queue.poll();
                 for (MemberNode item : node.childs) {
                     if (item.name.equals(member)) {
-                        System.out.println("#Uncles of " + member + " - ");
+                        System.out.println("Uncles of " + member + " - ");
                         retrieveBrothers(node.name, "Uncles");
                         break;
                     }
@@ -287,7 +301,7 @@ public class Family {
 
                     for (MemberNode grandchild : item.childs) {
                         if (grandchild.name.equals(member)) {
-                            System.out.println("#Grandfather of " + member + " - ");
+                            System.out.println("Grandfather of " + member + " - ");
                             System.out.println(node.name);
                             break;
                         }
@@ -321,37 +335,21 @@ public class Family {
 
         return sb.toString();
     }
-}
 
-class MemberNode {
+    public static void main(String[] args) {
 
-    String name;
-    LinkedList<MemberNode> childs;
+        Family family = new Family();
+        family.constructFamilyTree();
 
-    MemberNode(String name) {
-        this.name = name;
-        this.childs = new LinkedList<>();
-    }
+        family.retrieveFather("Michael");
+        family.retrieveSons("Bob");
+        family.retrieveBrothers("Richard", null);
+        family.retrieveOldestBrother("Bob");
+        family.retrieveYoungestBrother("Bob");
+        family.retrieveOldestSon("Bob");
+        family.retrieveYoungestSon("Bob");
+        family.retrieveUncles("Jake");
+        family.retrieveGrandfather("Bill");
 
-    public boolean equals(Object obj) {
-
-        if (obj == this) {
-            return true;
-        }
-
-        if (!(obj instanceof MemberNode)) {
-            return false;
-        }
-
-        MemberNode node = (MemberNode) obj;
-        if (!this.name.equals(node.name)) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        return name.hashCode();
     }
 }
